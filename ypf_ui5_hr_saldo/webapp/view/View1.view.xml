@@ -1,0 +1,52 @@
+<mvc:View xmlns:form="sap.ui.layout.form" controllerName="ypf.ypfui5hrsaldo.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <Wizard id="WizardSolicitud"  complete="onWizardComplete">
+
+            <WizardStep id="PrimerStep" title="Cabecera" validated="false" activate="onCabeceraValidacion">
+                <MessageStrip id="M1" class="sapUiSmallMarginBottom"
+										text="Ingresar los datos de Cabecera"
+										showIcon="true"/>
+                <form:SimpleForm id="FormCabecera" editable="true" layout="ResponsiveGridLayout">
+
+                </form:SimpleForm>                        
+            
+            </WizardStep>
+
+                <WizardStep id="SegundoStep" title="Informacion de Solicitud" validated="false" activate="onInformacionValidacion">
+                    <MessageStrip id="M2" class="sapUiSmallMarginBottom"
+										text="Ingresar los datos de Informacion"
+										showIcon="true"/>
+                                    
+            
+                </WizardStep>
+
+                 <WizardStep id="TercerStep" title="Comentarios" validated="true">
+                    <MessageStrip id="M3" class="sapUiSmallMarginBottom"
+										text="Ingresar los comentarios"
+										showIcon="true"/>
+                                    
+            
+                </WizardStep>
+
+                 <WizardStep id="CuartoStep" title="Adjuntos" validated="true">
+                    <MessageStrip id="M4" class="sapUiSmallMarginBottom"
+										text="Ingresar los datos adjuntos"
+										showIcon="true"/>
+                                    
+            
+                </WizardStep>
+
+
+                 <WizardStep id="QuintoStep" title="Revision" validated="true">
+                    <MessageStrip id="M5" class="sapUiSmallMarginBottom"
+										text="Revisar los datos ingresados en la solicitud"
+										showIcon="true"/>
+                                    
+            
+                </WizardStep>
+
+        </Wizard>
+    </Page>
+</mvc:View>
