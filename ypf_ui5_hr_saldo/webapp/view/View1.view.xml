@@ -1,14 +1,56 @@
 <mvc:View xmlns:form="sap.ui.layout.form" controllerName="ypf.ypfui5hrsaldo.controller.View1"
     xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
     xmlns="sap.m">
     <Page id="page" title="{i18n>title}">
-        <Wizard id="WizardSolicitud"  complete="onWizardComplete">
+        <Wizard id="wizardId"  complete="onWizardComplete">
 
             <WizardStep id="PrimerStep" title="Cabecera" validated="false" activate="onCabeceraValidacion">
                 <MessageStrip id="M1" class="sapUiSmallMarginBottom"
 										text="Ingresar los datos de Cabecera"
 										showIcon="true"/>
                 <form:SimpleForm id="FormCabecera" editable="true" layout="ResponsiveGridLayout">
+
+                    <Label id="lblSociedad" text="Sociedad" required="true" />
+                    <Input
+                        id="inpSociedad"
+                        placeholder="Seleccione sociedad"
+                        showValueHelp="true"
+                        valueHelpRequest=".onValueHelpSociedad"
+                        change=".onCabeceraValidacion" />
+
+                         <Label id="lblTipoSolicitud" text="Tipo de Solicitud" required="true" />
+                    <ComboBox
+                        id="cmbTipoSolicitud"
+                        selectionChange=".onCabeceraValidacion">
+                        <items>
+                            <core:Item id="k6" key="" text="Seleccione..." />
+                            <core:Item id="k7" key="MULTA" text="Multa" />
+                            <core:Item id="k9" key="NC" text="Nota de Crédito" />
+                            <core:Item id="k10" key="AJUSTE" text="Ajuste" />
+                        </items>
+                    </ComboBox>
+
+                      <Label id="lblProveedor" text="Proveedor" required="true" />
+                    <Input
+                        id="inpProveedor"
+                        placeholder="Seleccione proveedor"
+                        showValueHelp="true"
+                        valueHelpRequest=".onValueHelpProveedor"
+                        change=".onCabeceraValidacion" />
+
+                    <Label id="lblUbicacion" text="Ubicación" required="true" />
+                    <ComboBox
+                        id="cmbUbicacion"
+                        selectionChange=".onCabeceraValidacion">
+                        <items>
+                            <core:Item id="k1" key="" text="Seleccione..." />
+                            <core:Item id="k2" key="BA_RESTO" text="Buenos Aires - Resto" />
+                            <core:Item id="k3" key="CABA" text="CABA" />
+                            <core:Item id="k4" key="CORDOBA" text="Córdoba" />
+                            <core:Item id="k5" key="ROSARIO" text="Rosario" />
+                        </items>
+                    </ComboBox>
 
                 </form:SimpleForm>                        
             
