@@ -5,7 +5,7 @@
     <Page id="page" title="{i18n>title}">
         <Wizard id="wizardId"  complete="onWizardComplete">
 
-            <WizardStep id="PrimerStep" title="Cabecera" validated="false" activate="onCabeceraValidacion">
+            <WizardStep id="PrimerStep" title="Cabecera" validated="false" activate=".onCabeceraValidacion">
                 <MessageStrip id="M1" class="sapUiSmallMarginBottom"
 										text="Ingresar los datos de Cabecera"
 										showIcon="true"/>
@@ -54,14 +54,40 @@
 
                 </form:SimpleForm>                        
             
+                <HBox  id="p1" justifyContent="Center">
+
+
+    <Button id="bt1"
+        text="Siguiente paso"
+        type="Emphasized"
+        press=".onSiguientePaso1"/>
+
+</HBox>
+
             </WizardStep>
 
                 <WizardStep id="SegundoStep" title="Informacion de Solicitud" validated="false" activate="onInformacionValidacion">
                     <MessageStrip id="M2" class="sapUiSmallMarginBottom"
 										text="Ingresar los datos de Informacion"
 										showIcon="true"/>
-                                    
-            
+                    <form:SimpleForm id="sf2">
+                          
+                    </form:SimpleForm>                
+
+                    <HBox id="bt6" justifyContent="Center">
+
+    <Button id="bt4"
+        text="Paso anterior"
+        press=".onPasoAnterior1"
+        class="sapUiTinyMarginEnd"/>
+
+    <Button id="bt5"
+        text="Siguiente paso"
+        type="Emphasized"
+        press=".onSiguientePaso2"/>
+
+</HBox>    
+
                 </WizardStep>
 
                  <WizardStep id="TercerStep" title="Comentarios" validated="true">
