@@ -274,6 +274,35 @@ sap.ui.define([
             oWizard.invalidateStep(this.byId("PrimerStep"));
             oWizard.invalidateStep(this.byId("SegundoStep"));
 
+        },
+        onComentariosValidacion:function(){
+            var oWizard = this.byId("wizardId");
+            var oStep3 = this.byId("TercerStep");
+
+            var bCompleto =
+                !!this.byId("txtComentarios").getValue().trim();
+
+            if (bCompleto) {
+                oWizard.validateStep(oStep3);
+            } else {
+                oWizard.invalidateStep(oStep3);
+            }
+
+        },
+         onPasoAnterior2: function () {
+            var oWizard = this.byId("wizardId");
+            var oStepActual = this.byId("SegundoStep");
+            oWizard.previousStep();
+        },
+        onPasoSiguiente3:function(){
+            var oWizard = this.byId("wizardId");
+            var oStepActual = this.byId("TercerStep");
+
+            this.onComentariosValidacion();
+
+            if (oStepActual.getValidated()) {
+                oWizard.nextStep();
+            }
         }
     });
 });

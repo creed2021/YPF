@@ -233,12 +233,37 @@
     </VBox>
 
 </WizardStep>
-                 <WizardStep id="TercerStep" title="Comentarios" validated="true">
+                 <WizardStep id="TercerStep" title="Comentarios" validated="false" activate=".onComentariosValidacion">
                     <MessageStrip id="M3" class="sapUiSmallMarginBottom"
-										text="Ingresar los comentarios"
+                                        type="Information"
+										text="Agrega el comentario que creas necesario. Max caracteres 250"
 										showIcon="true"/>
-                                    
+                    <form:SimpleForm id="ts2">
+                       <TextArea id="txtComentario" placeholder="Escribí tu comentario aquí..." rows="5" maxLength="250" liveChange=".onComentariosValidacion" width="100%"/>
+
+                    </form:SimpleForm>                
             
+                    
+        <HBox
+            id="bt11"
+            justifyContent="Center"
+            class="sapUiMediumMarginTop">
+
+            <Button
+                id="bt12"
+                text="Paso anterior"
+                press=".onPasoAnterior2"
+                class="sapUiTinyMarginEnd"/>
+
+            <Button
+                id="bt13"
+                text="Siguiente paso"
+                type="Emphasized"
+                press=".onSiguientePaso3"/>
+
+        </HBox>
+
+
                 </WizardStep>
 
                  <WizardStep id="CuartoStep" title="Adjuntos" validated="true">
