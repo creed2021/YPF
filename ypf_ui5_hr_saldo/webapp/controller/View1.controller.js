@@ -280,7 +280,7 @@ sap.ui.define([
             var oStep3 = this.byId("TercerStep");
 
             var bCompleto =
-                !!this.byId("txtComentarios").getValue().trim();
+                !!this.byId("txtComentario").getValue().trim();
 
             if (bCompleto) {
                 oWizard.validateStep(oStep3);
@@ -294,7 +294,7 @@ sap.ui.define([
             var oStepActual = this.byId("SegundoStep");
             oWizard.previousStep();
         },
-        onPasoSiguiente3:function(){
+        onSiguientePaso3:function(){
             var oWizard = this.byId("wizardId");
             var oStepActual = this.byId("TercerStep");
 
