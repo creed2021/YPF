@@ -142,19 +142,21 @@ sap.ui.define([
         },
         onCancelarSolicitud: function () {
 
-            sap.m.MessageBox.confirm(
-                "¿Desea cancelar la solicitud?",
+            sap.m.MessageBox.warning(
+                "Se perderá la información completada si cancela la solicitud",
                 {
-                    actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+                    title: "¿Cancelar la solicitud?",
+                    actions: ["Si, cancelar solicitud", "No, quiero continuar"],
+                    emphasizedAction: "Si, cancelar la solicitud",
                     onClose: function (sAction) {
 
-                        if (sAction === sap.m.MessageBox.Action.YES) {
+                        if (sAction === "Si, cancelar solicitud") {
 
                             sap.m.MessageToast.show("Solicitud cancelada");
 
                             // ejemplo: limpiar wizard o volver
                             var oWizard = this.byId("wizardId");
-                             this._resetFormulario();
+                            this._resetFormulario();
                             oWizard.discardProgress(oWizard.getSteps()[0]);
                         }
 
@@ -275,7 +277,7 @@ sap.ui.define([
             oWizard.invalidateStep(this.byId("SegundoStep"));
 
         },
-        onComentariosValidacion:function(){
+        onComentariosValidacion: function () {
             var oWizard = this.byId("wizardId");
             var oStep3 = this.byId("TercerStep");
 
@@ -289,12 +291,12 @@ sap.ui.define([
             }
 
         },
-         onPasoAnterior2: function () {
+        onPasoAnterior2: function () {
             var oWizard = this.byId("wizardId");
             var oStepActual = this.byId("SegundoStep");
             oWizard.previousStep();
         },
-        onSiguientePaso3:function(){
+        onSiguientePaso3: function () {
             var oWizard = this.byId("wizardId");
             var oStepActual = this.byId("TercerStep");
 
