@@ -239,7 +239,7 @@
 										text="Agrega el comentario que creas necesario. Max caracteres 250"
 										showIcon="true"/>
                     <form:SimpleForm id="ts2">
-                       <TextArea id="txtComentario" placeholder="Escribí tu comentario aquí..." rows="5" maxLength="250" liveChange=".onComentariosValidacion" width="100%"/>
+                       <TextArea id="txtComentario" placeholder="Escribí tu comentario aquí..." rows="5" maxLength="250" liveChange=".onComentariosValidacion" showExceededText="true" width="100%"/>
 
                     </form:SimpleForm>                
             
