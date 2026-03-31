@@ -1,310 +1,337 @@
-<mvc:View xmlns:form="sap.ui.layout.form" controllerName="ypf.ypfui5hrsaldo.controller.View1"
+<mvc:View xmlns:form="sap.ui.layout.form"
+    controllerName="ypf.ypfui5hrsaldo.controller.View1"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
     xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
-      <content>
-        <Wizard id="wizardId"  complete="onWizardComplete">
 
-            <WizardStep id="PrimerStep" title="Cabecera" validated="false" activate=".onCabeceraValidacion">
-                <MessageStrip id="M1" class="sapUiSmallMarginBottom"
-										text="Ingresar los datos de Cabecera"
-										showIcon="true"/>
-                <form:SimpleForm id="FormCabecera" editable="true" layout="ResponsiveGridLayout">
+    <Page id="pgSolicitud" title="{i18n>title}">
+        <content>
+            <Wizard id="wizSolicitud" complete="onWizardComplete">
 
-                    <Label id="lblSociedad" text="Sociedad" required="true" />
-                    <Input
-                        id="inpSociedad"
-                        placeholder="Seleccione sociedad"
-                        showValueHelp="true"
-                        valueHelpRequest=".onValueHelpSociedad"
-                        change=".onCabeceraValidacion" />
+                <WizardStep
+                    id="stpCabecera"
+                    title="Cabecera"
+                    validated="false"
+                    activate=".onCabeceraValidacion">
 
-                         <Label id="lblTipoSolicitud" text="Tipo de Solicitud" required="true" />
-                    <ComboBox
-                        id="cmbTipoSolicitud"
-                        selectionChange=".onCabeceraValidacion">
-                        <items>
-                            <core:Item id="k6" key="" text="Seleccione..." />
-                            <core:Item id="k7" key="1" text="Multa" />
-                            <core:Item id="k9" key="2" text="Reintegro" />
-                            <core:Item id="k10" key="3" text="Fondo de Reparo" />
-                        </items>
-                    </ComboBox>
+                    <MessageStrip
+                        id="msgCabecera"
+                        class="sapUiSmallMarginBottom"
+                        text="Ingresar los datos de Cabecera"
+                        showIcon="true" />
 
-                      <Label id="lblProveedor" text="Proveedor" required="true" />
-                    <Input
-                        id="inpProveedor"
-                        placeholder="Seleccione proveedor"
-                        showValueHelp="true"
-                        valueHelpRequest=".onValueHelpProveedor"
-                        change=".onCabeceraValidacion" />
+                    <form:SimpleForm
+                        id="frmCabecera"
+                        editable="true"
+                        layout="ResponsiveGridLayout">
 
-                    <Label id="lblUbicacion" text="Ubicación" required="true" />
-                    <ComboBox
-                        id="cmbUbicacion"
-                        selectionChange=".onCabeceraValidacion">
-                        <items>
-                            <core:Item id="k1" key="" text="Seleccione..." />
-                            <core:Item id="k2" key="BA_RESTO" text="Buenos Aires - Resto" />
-                            <core:Item id="k3" key="CABA" text="CABA" />
-                            <core:Item id="k4" key="CORDOBA" text="Córdoba" />
-                            <core:Item id="k5" key="ROSARIO" text="Rosario" />
-                        </items>
-                    </ComboBox>
+                        <Label id="lblSociedad" text="Sociedad" required="true" />
+                        <Input
+                            id="inpSociedad"
+                            placeholder="Seleccione sociedad"
+                            showValueHelp="true"
+                            valueHelpRequest=".onValueHelpSociedad"
+                            change=".onCabeceraValidacion" />
 
-                </form:SimpleForm>                        
-            
-                <HBox  id="p1" justifyContent="Center">
+                        <Label id="lblTipoSolicitud" text="Tipo de Solicitud" required="true" />
+                        <ComboBox
+                            id="cmbTipoSolicitud"
+                            selectionChange=".onCabeceraValidacion">
+                            <items>
+                                <core:Item id="itemTipoSolicitudDefault" key="" text="Seleccione..." />
+                                <core:Item id="itemTipoSolicitudMulta" key="1" text="Multa" />
+                                <core:Item id="itemTipoSolicitudReintegro" key="2" text="Reintegro" />
+                                <core:Item id="itemTipoSolicitudFondoReparo" key="3" text="Fondo de Reparo" />
+                            </items>
+                        </ComboBox>
 
+                        <Label id="lblProveedor" text="Proveedor" required="true" />
+                        <Input
+                            id="inpProveedor"
+                            placeholder="Seleccione proveedor"
+                            showValueHelp="true"
+                            valueHelpRequest=".onValueHelpProveedor"
+                            change=".onCabeceraValidacion" />
 
-    <Button id="bt1"
-        text="Siguiente paso"
-        type="Emphasized"
-        press=".onSiguientePaso1"/>
+                        <Label id="lblUbicacion" text="Ubicación" required="true" />
+                        <ComboBox
+                            id="cmbUbicacion"
+                            selectionChange=".onCabeceraValidacion">
+                            <items>
+                                <core:Item id="itemUbicacionDefault" key="" text="Seleccione..." />
+                                <core:Item id="itemUbicacionBuenosAiresResto" key="BA_RESTO" text="Buenos Aires - Resto" />
+                                <core:Item id="itemUbicacionCaba" key="CABA" text="CABA" />
+                                <core:Item id="itemUbicacionCordoba" key="CORDOBA" text="Córdoba" />
+                                <core:Item id="itemUbicacionRosario" key="ROSARIO" text="Rosario" />
+                            </items>
+                        </ComboBox>
 
-</HBox>
+                    </form:SimpleForm>
 
-            </WizardStep>
+                    <HBox id="boxAccionesCabecera" justifyContent="Center">
+                        <Button
+                            id="btnSiguienteCabecera"
+                            text="Siguiente paso"
+                            tooltip="Permite avanzar al siguiente paso de la solicitud"
+                            type="Emphasized"
+                            press=".onSiguientePaso1" />
+                    </HBox>
 
-              <WizardStep
-    id="SegundoStep"
-    title="Informacion de Solicitud"
-    validated="false"
-    activate=".onInformacionValidacion">
+                </WizardStep>
 
-    <MessageStrip
-        id="M2"
-        class="sapUiSmallMarginBottom"
-        text="Ingresar los datos de Informacion"
-        showIcon="true"/>
+                <WizardStep
+                    id="stpInformacion"
+                    title="Informacion de Solicitud"
+                    validated="false"
+                    activate=".onInformacionValidacion">
 
-    <VBox id="bt7" class="sapUiMediumMargin">
+                    <MessageStrip
+                        id="msgInformacion"
+                        class="sapUiSmallMarginBottom"
+                        text="Ingresar los datos de Informacion"
+                        showIcon="true" />
 
-        <Title
-            id="ttlStep2"
-            text="2. Información de solicitud"
-            level="H3"
-            class="sapUiSmallMarginBottom"/>
+                    <VBox id="boxInformacion" class="sapUiMediumMargin">
 
-        <Panel
-            id="pnlDatosCabecera"
-            headerText="Datos de cabecera"
-            expandable="true"
-            expanded="true"
-            class="sapUiResponsiveMargin">
+                        <Title
+                            id="ttlStep2"
+                            text="2. Información de solicitud"
+                            level="H3"
+                            class="sapUiSmallMarginBottom" />
 
-            <VBox id="br3" class="sapUiSmallMargin">
+                        <Panel
+                            id="pnlDatosCabecera"
+                            headerText="Datos de cabecera"
+                            expandable="true"
+                            expanded="true"
+                            class="sapUiResponsiveMargin">
 
-                <Button
-                    id="btnSolicitudMulta"
-                    text="Solicitud de Multa"
-                    type="Transparent"
-                    icon="sap-icon://add"
-                    class="sapUiTinyMarginBottom"/>
+                            <VBox id="boxDatosCabecera" class="sapUiSmallMargin">
 
-                <layout:Grid
-                    id="gridStep2"
-                    xmlns:layout="sap.ui.layout"
-                    defaultSpan="XL6 L6 M6 S12"
-                    hSpacing="1"
-                    vSpacing="1">
+                                <Button
+                                    id="btnSolicitudMulta"
+                                    text="Solicitud de Multa"
+                                    type="Transparent"
+                                    icon="sap-icon://add"
+                                    class="sapUiTinyMarginBottom" />
 
-                    <VBox id="vbColumnaIzquierda">
+                                <layout:Grid
+                                    id="grdStep2"
+                                    xmlns:layout="sap.ui.layout"
+                                    defaultSpan="XL6 L6 M6 S12"
+                                    hSpacing="1"
+                                    vSpacing="1">
 
-                        <HBox id="hbSucursal" alignItems="Center" class="sapUiTinyMarginBottom">
-                            <Label id="lblSucursal" text="Sucursal:" required="true" width="140px"/>
-                            <Input
-                                id="inpSucursal"
-                                placeholder="Seleccione una Sucursal"
-                                editable="false"
-                                change=".onInformacionValidacion"
-                                value="1101"
-                                width="100%"/>
-                        </HBox>
+                                    <VBox id="vbColumnaIzquierda">
 
-                        <HBox id="hbPedido" alignItems="Center" class="sapUiTinyMarginBottom">
-                            <Label id="lblPedido" text="Pedido:" required="true" width="140px"/>
-                            <Input
-                                id="inpPedido"
-                                placeholder="Ingrese un nro pedido"
-                                showValueHelp="true"
-                                valueHelpRequest=".onValueHelpPedido"
-                                change=".onInformacionValidacion"
-                                width="100%"/>
-                        </HBox>
+                                        <HBox id="hbSucursal" alignItems="Center" class="sapUiTinyMarginBottom">
+                                            <Label id="lblSucursal" text="Sucursal:" required="true" width="140px" />
+                                            <Input
+                                                id="inpSucursal"
+                                                placeholder="Seleccione una Sucursal"
+                                                editable="false"
+                                                change=".onInformacionValidacion"
+                                                value="1101"
+                                                width="100%" />
+                                        </HBox>
 
-                        <HBox id="hbHojaEntrada" alignItems="Center" class="sapUiTinyMarginBottom">
-                            <Label id="lblHojaEntrada" text="Hoja de entrada / serv.:" required="true" width="140px"/>
-                            <Input
-                                id="inpHojaEntrada"
-                                placeholder="Ingrese Hoja de Servicio"
-                                change=".onInformacionValidacion"
-                                width="100%"/>
-                        </HBox>
+                                        <HBox id="hbPedido" alignItems="Center" class="sapUiTinyMarginBottom">
+                                            <Label id="lblPedido" text="Pedido:" required="true" width="140px" />
+                                            <Input
+                                                id="inpPedido"
+                                                placeholder="Ingrese un nro pedido"
+                                                showValueHelp="true"
+                                                valueHelpRequest=".onValueHelpPedido"
+                                                change=".onInformacionValidacion"
+                                                width="100%" />
+                                        </HBox>
 
-                        <HBox id="hbCentroCosto" alignItems="Center" class="sapUiTinyMarginBottom">
-                            <Label id="lblCentroCosto" text="Centro coste:" required="true" width="140px"/>
-                            <Input
-                                id="inpCentroCosto"
-                                placeholder="Seleccione un centro de Costo"
-                                showValueHelp="true"
-                                valueHelpRequest=".onValueHelpCentroCosto"
-                                change=".onInformacionValidacion"
-                                width="100%"/>
-                        </HBox>
+                                        <HBox id="hbHojaEntrada" alignItems="Center" class="sapUiTinyMarginBottom">
+                                            <Label id="lblHojaEntrada" text="Hoja de entrada / serv.:" required="true" width="140px" />
+                                            <Input
+                                                id="inpHojaEntrada"
+                                                placeholder="Ingrese Hoja de Servicio"
+                                                change=".onInformacionValidacion"
+                                                width="100%" />
+                                        </HBox>
 
-                        <HBox id="hbEjercicio" alignItems="Center" class="sapUiTinyMarginBottom">
-                            <Label id="lblEjercicio" text="Ejercicio:" required="true" width="140px"/>
-                            <Input
-                                id="inpEjercicio"
-                                placeholder="Ingresar un nro Ejercicio"
-                                change=".onInformacionValidacion"
-                                width="100%"/>
+                                        <HBox id="hbCentroCosto" alignItems="Center" class="sapUiTinyMarginBottom">
+                                            <Label id="lblCentroCosto" text="Centro coste:" required="true" width="140px" />
+                                            <Input
+                                                id="inpCentroCosto"
+                                                placeholder="Seleccione un centro de Costo"
+                                                showValueHelp="true"
+                                                valueHelpRequest=".onValueHelpCentroCosto"
+                                                change=".onInformacionValidacion"
+                                                width="100%" />
+                                        </HBox>
+
+                                        <HBox id="hbEjercicio" alignItems="Center" class="sapUiTinyMarginBottom">
+                                            <Label id="lblEjercicio" text="Ejercicio:" required="true" width="140px" />
+                                            <Input
+                                                id="inpEjercicio"
+                                                placeholder="Ingresar un nro Ejercicio"
+                                                change=".onInformacionValidacion"
+                                                width="100%" />
+                                        </HBox>
+
+                                    </VBox>
+
+                                    <VBox id="vbColumnaDerecha">
+
+                                        <HBox id="hbMoneda" alignItems="Center" class="sapUiTinyMarginBottom">
+                                            <Label id="lblMoneda" text="Moneda:" required="true" width="140px" />
+                                            <ComboBox
+                                                id="cmbMoneda"
+                                                selectionChange=".onInformacionValidacion"
+                                                width="100%">
+                                                <items>
+                                                    <core:Item id="itemMonedaDefault" key="" text="Seleccione..." />
+                                                    <core:Item id="itemMonedaArs" key="ARS" text="ARS" />
+                                                    <core:Item id="itemMonedaUsd" key="USD" text="USD" />
+                                                    <core:Item id="itemMonedaEur" key="EUR" text="EUR" />
+                                                </items>
+                                            </ComboBox>
+                                        </HBox>
+
+                                        <HBox id="hbImporte" alignItems="Center" class="sapUiTinyMarginBottom">
+                                            <Label id="lblImporte" text="Importe:" required="true" width="140px" />
+                                            <Input
+                                                id="inpImporte"
+                                                type="Number"
+                                                placeholder="Ingresar un Importe"
+                                                change=".onInformacionValidacion"
+                                                width="100%" />
+                                        </HBox>
+
+                                        <HBox id="hbReferencia" alignItems="Center" class="sapUiTinyMarginBottom">
+                                            <Label id="lblReferencia" text="Referencia:" width="140px" />
+                                            <Input
+                                                id="inpReferencia"
+                                                placeholder="Ingrese una referecia"
+                                                change=".onInformacionValidacion"
+                                                width="100%" />
+                                        </HBox>
+
+                                        <HBox id="hbCentroBeneficio" alignItems="Center" class="sapUiTinyMarginBottom">
+                                            <Label id="lblCentroBeneficio" text="Centro de Beneficio:" width="140px" />
+                                            <Input
+                                                id="inpCentroBeneficio"
+                                                placeholder="Ingrese Centro de Beneficio"
+                                                showValueHelp="true"
+                                                valueHelpRequest=".onValueHelpCentroBeneficio"
+                                                change=".onInformacionValidacion"
+                                                width="100%" />
+                                        </HBox>
+
+                                    </VBox>
+
+                                </layout:Grid>
+
+                            </VBox>
+                        </Panel>
+
+                        <HBox
+                            id="boxAccionesInformacion"
+                            justifyContent="Center"
+                            class="sapUiMediumMarginTop">
+
+                            <Button
+                                id="btnAnteriorInformacion"
+                                text="Paso anterior"
+                                tooltip="Permite regresar al paso anterior de la solicitud"
+                                press=".onPasoAnterior1"
+                                class="sapUiTinyMarginEnd" />
+
+                            <Button
+                                id="btnSiguienteInformacion"
+                                text="Siguiente paso"
+                                tooltip="Permite avanzar al siguiente paso de la solicitud"
+                                type="Emphasized"
+                                press=".onSiguientePaso2" />
+
                         </HBox>
 
                     </VBox>
 
-                    <VBox id="vbColumnaDerecha">
+                </WizardStep>
 
-                        <HBox id="hbMoneda" alignItems="Center" class="sapUiTinyMarginBottom">
-                            <Label id="lblMoneda" text="Moneda:" required="true" width="140px"/>
-                            <ComboBox
-                                id="cmbMoneda"
-                                selectionChange=".onInformacionValidacion"
-                                width="100%">
-                                <items>
-                                    <core:Item id="itemMonedaDefault" key="" text="Seleccione..." />
-                                    <core:Item id="itemMonedaArs" key="ARS" text="ARS" />
-                                    <core:Item id="itemMonedaUsd" key="USD" text="USD" />
-                                    <core:Item id="itemMonedaEur" key="EUR" text="EUR" />
-                                </items>
-                            </ComboBox>
-                        </HBox>
+                <WizardStep
+                    id="stpComentarios"
+                    title="Comentarios"
+                    validated="false"
+                    activate=".onComentariosValidacion">
 
-                        <HBox id="hbImporte" alignItems="Center" class="sapUiTinyMarginBottom">
-                            <Label id="lblImporte" text="Importe:" required="true" width="140px"/>
-                            <Input
-                                id="inpImporte"
-                                type="Number"
-                                placeholder="Ingresar un Importe"
-                                change=".onInformacionValidacion"
-                                width="100%"/>
-                        </HBox>
+                    <MessageStrip
+                        id="msgComentarios"
+                        class="sapUiSmallMarginBottom"
+                        type="Information"
+                        text="Agrega el comentario que creas necesario. Max caracteres 250"
+                        showIcon="true" />
 
-                        <HBox id="hbReferencia" alignItems="Center" class="sapUiTinyMarginBottom">
-                            <Label id="lblReferencia" text="Referencia:" width="140px"/>
-                            <Input
-                                id="inpReferencia"
-                                placeholder="Ingrese una referecia"
-                                change=".onInformacionValidacion"
-                                width="100%"/>
-                        </HBox>
+                    <form:SimpleForm id="frmComentarios">
+                        <TextArea
+                            id="txtaComentario"
+                            placeholder="Escribí tu comentario aquí..."
+                            rows="5"
+                            maxLength="250"
+                            liveChange=".onComentariosValidacion"
+                            showExceededText="true"
+                            width="100%" />
+                    </form:SimpleForm>
 
-                        <HBox id="hbCentroBeneficio" alignItems="Center" class="sapUiTinyMarginBottom">
-                            <Label id="lblCentroBeneficio" text="Centro de Beneficio:" width="140px"/>
-                            <Input
-                                id="inpCentroBeneficio"
-                                placeholder="Ingrese Centro de Beneficio"
-                                showValueHelp="true"
-                                valueHelpRequest=".onValueHelpCentroBeneficio"
-                                change=".onInformacionValidacion"
-                                width="100%"/>
-                        </HBox>
+                    <HBox
+                        id="boxAccionesComentarios"
+                        justifyContent="Center"
+                        class="sapUiMediumMarginTop">
 
-                    </VBox>
+                        <Button
+                            id="btnAnteriorComentarios"
+                            text="Paso anterior"
+                            tooltip="Permite regresar al paso anterior de la solicitud"
+                            press=".onPasoAnterior2"
+                            class="sapUiTinyMarginEnd" />
 
-                </layout:Grid>
+                        <Button
+                            id="btnSiguienteComentarios"
+                            text="Siguiente paso"
+                            tooltip="Permite avanzar al siguiente paso de la solicitud"
+                            type="Emphasized"
+                            press=".onSiguientePaso3" />
 
-            </VBox>
-        </Panel>
-
-        <HBox
-            id="bt6"
-            justifyContent="Center"
-            class="sapUiMediumMarginTop">
-
-            <Button
-                id="bt4"
-                text="Paso anterior"
-                press=".onPasoAnterior1"
-                class="sapUiTinyMarginEnd"/>
-
-            <Button
-                id="bt5"
-                text="Siguiente paso"
-                type="Emphasized"
-                press=".onSiguientePaso2"/>
-
-        </HBox>
-
-    </VBox>
-
-</WizardStep>
-                 <WizardStep id="TercerStep" title="Comentarios" validated="false" activate=".onComentariosValidacion">
-                    <MessageStrip id="M3" class="sapUiSmallMarginBottom"
-                                        type="Information"
-										text="Agrega el comentario que creas necesario. Max caracteres 250"
-										showIcon="true"/>
-                    <form:SimpleForm id="ts2">
-                       <TextArea id="txtComentario" placeholder="Escribí tu comentario aquí..." rows="5" maxLength="250" liveChange=".onComentariosValidacion" showExceededText="true" width="100%"/>
-
-                    </form:SimpleForm>                
-            
-                    
-        <HBox
-            id="bt11"
-            justifyContent="Center"
-            class="sapUiMediumMarginTop">
-
-            <Button
-                id="bt12"
-                text="Paso anterior"
-                press=".onPasoAnterior2"
-                class="sapUiTinyMarginEnd"/>
-
-            <Button
-                id="bt13"
-                text="Siguiente paso"
-                type="Emphasized"
-                press=".onSiguientePaso3"/>
-
-        </HBox>
-
+                    </HBox>
 
                 </WizardStep>
 
-                 <WizardStep id="CuartoStep" title="Adjuntos" validated="true">
-                    <MessageStrip id="M4" class="sapUiSmallMarginBottom"
-										text="Ingresar los datos adjuntos"
-										showIcon="true"/>
-                                    
-            
+                <WizardStep id="stpAdjuntos" title="Adjuntos" validated="true">
+                    <MessageStrip
+                        id="msgAdjuntos"
+                        class="sapUiSmallMarginBottom"
+                        text="Ingresar los datos adjuntos"
+                        showIcon="true" />
                 </WizardStep>
 
-
-                 <WizardStep id="QuintoStep" title="Revision" validated="true">
-                    <MessageStrip id="M5" class="sapUiSmallMarginBottom"
-										text="Revisar los datos ingresados en la solicitud"
-										showIcon="true"/>
-                                    
-            
+                <WizardStep id="stpRevision" title="Revision" validated="true">
+                    <MessageStrip
+                        id="msgRevision"
+                        class="sapUiSmallMarginBottom"
+                        text="Revisar los datos ingresados en la solicitud"
+                        showIcon="true" />
                 </WizardStep>
 
-        </Wizard>
+            </Wizard>
         </content>
-         <footer>
-        <OverflowToolbar id="f1">
 
-            <ToolbarSpacer id="ts1"/>
-
-            <Button
-                id="btnCancelarSolicitud"
-                text="Cancelar solicitud"
-                type="Reject"
-                press=".onCancelarSolicitud"/>
-
-        </OverflowToolbar>
-    </footer>
+        <footer>
+            <OverflowToolbar id="tbFooterSolicitud">
+                <ToolbarSpacer id="spcFooter" />
+                <Button
+                    id="btnCancelarSolicitud"
+                    text="Cancelar solicitud"
+                    tooltip="Permite cancelar la carga de datos de la solicitud"
+                    type="Reject"
+                    press=".onCancelarSolicitud" />
+            </OverflowToolbar>
+        </footer>
     </Page>
 </mvc:View>
