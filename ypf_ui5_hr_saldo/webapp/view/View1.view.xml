@@ -2,10 +2,20 @@
     controllerName="ypf.ypfui5hrsaldo.controller.View1"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
     xmlns="sap.m">
 
-    <Page id="pgSolicitud" title="{i18n>title}">
+    <Page id="pgSolicitud" showHeader="false" class="customSolicitudPage">
         <content>
+            <VBox id="bvtitle" class="sapUiSmallMargin sapUiSmallMarginTop">
+        
+            <Title id="title" text="{i18n>title}" level="H2" />
+
+            <Text id="subtitle" text="{i18n>subtitle}"
+                  class="customSubtitle sapUiTinyMarginTop sapUiSmallMarginBottom" />
+
+        </VBox>
+
             <Wizard id="wizSolicitud" complete="onWizardComplete">
 
                 <WizardStep
@@ -79,182 +89,252 @@
 
                 </WizardStep>
 
-                <WizardStep
-                    id="stpInformacion"
-                    title="Informacion de Solicitud"
-                    validated="false"
-                    activate=".onInformacionValidacion">
+   <WizardStep
+    id="stpInformacion"
+    title="Informacion de Solicitud"
+    validated="false"
+    activate=".onInformacionValidacion">
 
-                    <MessageStrip
-                        id="msgInformacion"
-                        class="sapUiSmallMarginBottom"
-                        text="Ingresar los datos de Informacion"
-                        showIcon="true" />
+    <MessageStrip
+        id="msgInformacion"
+        class="sapUiSmallMarginBottom"
+        text="Ingresar los datos de Informacion"
+        showIcon="true" />
 
-                    <VBox id="boxInformacion" class="sapUiMediumMargin">
+    <VBox id="boxInformacion" class="sapUiSmallMargin">
 
-                        <Title
-                            id="ttlStep2"
-                            text="2. Información de solicitud"
-                            level="H3"
-                            class="sapUiSmallMarginBottom" />
+        <Panel
+            id="pnlDatosCabecera"
+            headerText="Datos de cabecera"
+            expandable="true"
+            expanded="true"
+            class="sapUiResponsiveMargin">
 
-                        <Panel
-                            id="pnlDatosCabecera"
-                            headerText="Datos de cabecera"
-                            expandable="true"
-                            expanded="true"
-                            class="sapUiResponsiveMargin">
+            <VBox id="boxDatosCabecera" class="sapUiSmallMargin">
 
-                            <VBox id="boxDatosCabecera" class="sapUiSmallMargin">
+                <Button
+                    id="btnSolicitudMulta"
+                    text="Solicitud de Multa"
+                    type="Transparent"
+                    icon="sap-icon://add"
+                    class="sapUiTinyMarginBottom" />
 
-                                <Button
-                                    id="btnSolicitudMulta"
-                                    text="Solicitud de Multa"
-                                    type="Transparent"
-                                    icon="sap-icon://add"
-                                    class="sapUiTinyMarginBottom" />
+                <layout:Grid
+                    id="grdStep2"
+                    width="100%"
+                    hSpacing="2"
+                    vSpacing="1">
 
-                                <layout:Grid
-                                    id="grdStep2"
-                                    xmlns:layout="sap.ui.layout"
-                                    defaultSpan="XL6 L6 M6 S12"
-                                    hSpacing="1"
-                                    vSpacing="1">
-
-                                    <VBox id="vbColumnaIzquierda">
-
-                                        <HBox id="hbSucursal" alignItems="Center" class="sapUiTinyMarginBottom">
-                                            <Label id="lblSucursal" text="Sucursal:" required="true" width="140px" />
-                                            <Input
-                                                id="inpSucursal"
-                                                placeholder="Seleccione una Sucursal"
-                                                editable="false"
-                                                change=".onInformacionValidacion"
-                                                value="1101"
-                                                width="100%" />
-                                        </HBox>
-
-                                        <HBox id="hbPedido" alignItems="Center" class="sapUiTinyMarginBottom">
-                                            <Label id="lblPedido" text="Pedido:" required="true" width="140px" />
-                                            <Input
-                                                id="inpPedido"
-                                                placeholder="Ingrese un nro pedido"
-                                                showValueHelp="true"
-                                                valueHelpRequest=".onValueHelpPedido"
-                                                change=".onInformacionValidacion"
-                                                width="100%" />
-                                        </HBox>
-
-                                        <HBox id="hbHojaEntrada" alignItems="Center" class="sapUiTinyMarginBottom">
-                                            <Label id="lblHojaEntrada" text="Hoja de entrada / serv.:" required="true" width="140px" />
-                                            <Input
-                                                id="inpHojaEntrada"
-                                                placeholder="Ingrese Hoja de Servicio"
-                                                change=".onInformacionValidacion"
-                                                width="100%" />
-                                        </HBox>
-
-                                        <HBox id="hbCentroCosto" alignItems="Center" class="sapUiTinyMarginBottom">
-                                            <Label id="lblCentroCosto" text="Centro coste:" required="true" width="140px" />
-                                            <Input
-                                                id="inpCentroCosto"
-                                                placeholder="Seleccione un centro de Costo"
-                                                showValueHelp="true"
-                                                valueHelpRequest=".onValueHelpCentroCosto"
-                                                change=".onInformacionValidacion"
-                                                width="100%" />
-                                        </HBox>
-
-                                        <HBox id="hbEjercicio" alignItems="Center" class="sapUiTinyMarginBottom">
-                                            <Label id="lblEjercicio" text="Ejercicio:" required="true" width="140px" />
-                                            <Input
-                                                id="inpEjercicio"
-                                                placeholder="Ingresar un nro Ejercicio"
-                                                change=".onInformacionValidacion"
-                                                width="100%" />
-                                        </HBox>
-
-                                    </VBox>
-
-                                    <VBox id="vbColumnaDerecha">
-
-                                        <HBox id="hbMoneda" alignItems="Center" class="sapUiTinyMarginBottom">
-                                            <Label id="lblMoneda" text="Moneda:" required="true" width="140px" />
-                                            <ComboBox
-                                                id="cmbMoneda"
-                                                selectionChange=".onInformacionValidacion"
-                                                width="100%">
-                                                <items>
-                                                    <core:Item id="itemMonedaDefault" key="" text="Seleccione..." />
-                                                    <core:Item id="itemMonedaArs" key="ARS" text="ARS" />
-                                                    <core:Item id="itemMonedaUsd" key="USD" text="USD" />
-                                                    <core:Item id="itemMonedaEur" key="EUR" text="EUR" />
-                                                </items>
-                                            </ComboBox>
-                                        </HBox>
-
-                                        <HBox id="hbImporte" alignItems="Center" class="sapUiTinyMarginBottom">
-                                            <Label id="lblImporte" text="Importe:" required="true" width="140px" />
-                                            <Input
-                                                id="inpImporte"
-                                                type="Number"
-                                                placeholder="Ingresar un Importe"
-                                                change=".onInformacionValidacion"
-                                                width="100%" />
-                                        </HBox>
-
-                                        <HBox id="hbReferencia" alignItems="Center" class="sapUiTinyMarginBottom">
-                                            <Label id="lblReferencia" text="Referencia:" width="140px" />
-                                            <Input
-                                                id="inpReferencia"
-                                                placeholder="Ingrese una referecia"
-                                                change=".onInformacionValidacion"
-                                                width="100%" />
-                                        </HBox>
-
-                                        <HBox id="hbCentroBeneficio" alignItems="Center" class="sapUiTinyMarginBottom">
-                                            <Label id="lblCentroBeneficio" text="Centro de Beneficio:" width="140px" />
-                                            <Input
-                                                id="inpCentroBeneficio"
-                                                placeholder="Ingrese Centro de Beneficio"
-                                                showValueHelp="true"
-                                                valueHelpRequest=".onValueHelpCentroBeneficio"
-                                                change=".onInformacionValidacion"
-                                                width="100%" />
-                                        </HBox>
-
-                                    </VBox>
-
-                                </layout:Grid>
-
-                            </VBox>
-                        </Panel>
+                    <!-- COLUMNA IZQUIERDA -->
+                    <VBox id="vbColumnaIzquierda" width="100%">
+                        <layoutData>
+                            <layout:GridData span="XL6 L6 M12 S12" />
+                        </layoutData>
 
                         <HBox
-                            id="boxAccionesInformacion"
-                            justifyContent="Center"
-                            class="sapUiMediumMarginTop">
-
-                            <Button
-                                id="btnAnteriorInformacion"
-                                text="Paso anterior"
-                                tooltip="Permite regresar al paso anterior de la solicitud"
-                                press=".onPasoAnterior1"
-                                class="sapUiTinyMarginEnd" />
-
-                            <Button
-                                id="btnSiguienteInformacion"
-                                text="Siguiente paso"
-                                tooltip="Permite avanzar al siguiente paso de la solicitud"
-                                type="Emphasized"
-                                press=".onSiguientePaso2" />
-
+                            id="hbSucursal"
+                            alignItems="Center"
+                            class="sapUiTinyMarginBottom"
+                            width="100%">
+                            <Label
+                                id="lblSucursal"
+                                text="Sucursal:"
+                                required="true"
+                                width="170px" />
+                            <Input
+                                id="inpSucursal"
+                                class="campoFormulario"
+                                placeholder="Seleccione una Sucursal"
+                                editable="false"
+                                change=".onInformacionValidacion"
+                                value="1101"
+                                width="20rem" />
                         </HBox>
 
+                        <HBox
+                            id="hbPedido"
+                            alignItems="Center"
+                            class="sapUiTinyMarginBottom"
+                            width="100%">
+                            <Label
+                                id="lblPedido"
+                                text="Pedido:"
+                                required="true"
+                                width="170px" />
+                            <Input
+                                id="inpPedido"
+                                placeholder="Ingrese un nro pedido"
+                                showValueHelp="true"
+                                valueHelpRequest=".onValueHelpPedido"
+                                change=".onInformacionValidacion"
+                                width="20rem" />
+                        </HBox>
+
+                        <HBox
+                            id="hbHojaEntrada"
+                            alignItems="Center"
+                            class="sapUiTinyMarginBottom"
+                            width="100%">
+                            <Label
+                                id="lblHojaEntrada"
+                                text="Hoja de entrada / serv.:"
+                                required="true"
+                                width="170px" />
+                            <Input
+                                id="inpHojaEntrada"
+                                placeholder="Ingrese Hoja de Servicio"
+                                change=".onInformacionValidacion"
+                                width="20rem" />
+                        </HBox>
+
+                        <HBox
+                            id="hbCentroCosto"
+                            alignItems="Center"
+                            class="sapUiTinyMarginBottom"
+                            width="100%">
+                            <Label
+                                id="lblCentroCosto"
+                                text="Centro coste:"
+                                required="true"
+                                width="170px" />
+                            <Input
+                                id="inpCentroCosto"
+                                placeholder="Seleccione un centro de Costo"
+                                showValueHelp="true"
+                                valueHelpRequest=".onValueHelpCentroCosto"
+                                change=".onInformacionValidacion"
+                                width="20rem" />
+                        </HBox>
+
+                        <HBox
+                            id="hbEjercicio"
+                            alignItems="Center"
+                            class="sapUiTinyMarginBottom"
+                            width="100%">
+                            <Label
+                                id="lblEjercicio"
+                                text="Ejercicio:"
+                                required="true"
+                                width="170px" />
+                            <Input
+                                id="inpEjercicio"
+                                placeholder="Ingresar un nro Ejercicio"
+                                change=".onInformacionValidacion"
+                                width="20rem" />
+                        </HBox>
                     </VBox>
 
-                </WizardStep>
+                    <!-- COLUMNA DERECHA -->
+                    <VBox id="vbColumnaDerecha" width="100%">
+                        <layoutData>
+                            <layout:GridData span="XL6 L6 M12 S12" />
+                        </layoutData>
+
+                        <HBox
+                            id="hbMoneda"
+                            alignItems="Center"
+                            class="sapUiTinyMarginBottom"
+                            width="100%">
+                            <Label
+                                id="lblMoneda"
+                                text="Moneda:"
+                                required="true"
+                                width="170px" />
+                            <ComboBox
+                                id="cmbMoneda"
+                                selectionChange=".onInformacionValidacion"
+                                width="20rem">
+                                <items>
+                                    <core:Item id="itemMonedaDefault" key="" text="Seleccione..." />
+                                    <core:Item id="itemMonedaArs" key="ARS" text="ARS" />
+                                    <core:Item id="itemMonedaUsd" key="USD" text="USD" />
+                                    <core:Item id="itemMonedaEur" key="EUR" text="EUR" />
+                                </items>
+                            </ComboBox>
+                        </HBox>
+
+                        <HBox
+                            id="hbImporte"
+                            alignItems="Center"
+                            class="sapUiTinyMarginBottom"
+                            width="100%">
+                            <Label
+                                id="lblImporte"
+                                text="Importe:"
+                                required="true"
+                                width="170px" />
+                            <Input
+                                id="inpImporte"
+                                type="Number"
+                                placeholder="Ingresar un Importe"
+                                change=".onInformacionValidacion"
+                                width="20rem" />
+                        </HBox>
+
+                        <HBox
+                            id="hbReferencia"
+                            alignItems="Center"
+                            class="sapUiTinyMarginBottom"
+                            width="100%">
+                            <Label
+                                id="lblReferencia"
+                                text="Referencia:"
+                                width="170px" />
+                            <Input
+                                id="inpReferencia"
+                                placeholder="Ingrese una referecia"
+                                change=".onInformacionValidacion"
+                                width="20rem" />
+                        </HBox>
+
+                        <HBox
+                            id="hbCentroBeneficio"
+                            alignItems="Center"
+                            class="sapUiTinyMarginBottom"
+                            width="100%">
+                            <Label
+                                id="lblCentroBeneficio"
+                                text="Centro de Beneficio:"
+                                width="170px" />
+                            <Input
+                                id="inpCentroBeneficio"
+                                placeholder="Ingrese Centro de Beneficio"
+                                showValueHelp="true"
+                                valueHelpRequest=".onValueHelpCentroBeneficio"
+                                change=".onInformacionValidacion"
+                                width="20rem" />
+                        </HBox>
+                    </VBox>
+
+                </layout:Grid>
+
+            </VBox>
+        </Panel>
+
+        <HBox
+            id="boxAccionesInformacion"
+            justifyContent="Center"
+            class="sapUiMediumMarginTop">
+
+            <Button
+                id="btnAnteriorInformacion"
+                text="Paso anterior"
+                tooltip="Permite regresar al paso anterior de la solicitud"
+                press=".onPasoAnterior1"
+                class="sapUiTinyMarginEnd" />
+
+            <Button
+                id="btnSiguienteInformacion"
+                text="Siguiente paso"
+                tooltip="Permite avanzar al siguiente paso de la solicitud"
+                type="Emphasized"
+                press=".onSiguientePaso2" />
+
+        </HBox>
+
+    </VBox>
+
+</WizardStep>
 
                 <WizardStep
                     id="stpComentarios"

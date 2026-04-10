@@ -1,1 +1,36 @@
 /* Enter your custom styles here */
+
+.customSolicitudPage .sapMPageEnableScrolling {
+    background-color: #ffffff !important;
+}
+
+.customSubtitle {
+    color: #6a6d70;
+    font-size: 0.95rem;
+}
+
+.customWizard .sapMWizardProgressNav {
+    box-shadow: none !important;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.customWizard .sapMWizardProgressNavStepContainer {
+    box-shadow: none !important;
+}
+
+.customWizard {
+    box-shadow: none !important;
+}
+
+.campoStep2 {
+    min-width: 18rem;
+    max-width: 100%;
+}
+
+.lblStep2 {
+    font-size: 0.95rem;
+}
+
+.campoFormulario {
+    margin-left: 0.75rem;
+}
