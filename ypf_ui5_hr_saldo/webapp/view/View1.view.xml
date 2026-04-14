@@ -3,6 +3,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
     xmlns:layout="sap.ui.layout"
+    xmlns:upload="sap.m.upload"
     xmlns="sap.m">
 
     <Page id="pgSolicitud" showHeader="false" class="customSolicitudPage">
@@ -383,12 +384,28 @@
 
                 </WizardStep>
 
-                <WizardStep id="stpAdjuntos" title="Adjuntos" validated="true">
+                <WizardStep id="stpAdjuntos" title="Adjuntos" validated="false" activate=".onAdjuntosValidation">
                     <MessageStrip
                         id="msgAdjuntos"
                         class="sapUiSmallMarginBottom"
                         text="Ingresar los datos adjuntos"
                         showIcon="true" />
+
+                        <upload:UploadSet id="us"
+                                items="{filesLocal>/items}"
+                                maxFileSize="25"
+                                maxFileNameLength="120"
+                                instantUpload="false"
+                                beforeUploadStarts="onBeforeUpload"
+                                uploadCompleted="onUploadCompleted">
+
+                            <upload:UploadSetItem fileName="{filesLocal>fileName}"
+                            url="{filesLocal>url}"
+                            mediaType="{filesLocal>mime}"
+                            visibleEdit="false"
+                            visibleRemove="true"/>
+                        </upload:UploadSet>
+
                 </WizardStep>
 
                 <WizardStep id="stpRevision" title="Revision" validated="true">

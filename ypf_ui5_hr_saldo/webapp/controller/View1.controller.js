@@ -9,8 +9,19 @@ sap.ui.define([
 
     return Controller.extend("ypf.ypfui5hrsaldo.controller.View1", {
         onInit: function () {
+
+            // wizard
             var oWizard = this.byId("wizSolicitud");
+            // deshabilitar botonera por defecto
             oWizard.setShowNextButton(false);
+
+            this._filesLocal = this.getOwnerComponent().getModel("filesLocal");
+            this._oFilesModel = this.getOwnerComponent().getModel("files") || null;
+
+            if (this._filesLocal) {
+                this._filesLocal.setProperty("/items", []);
+            }
+
         },
 
         onCabeceraValidacion: function () {
@@ -53,7 +64,7 @@ sap.ui.define([
                             this.onCabeceraValidacion();
                         }
                     }.bind(this),
-                    cancel: function () {}
+                    cancel: function () { }
                 });
 
                 this.getView().addDependent(this._oSociedadDialog);
@@ -85,7 +96,7 @@ sap.ui.define([
                             this.onCabeceraValidacion();
                         }
                     }.bind(this),
-                    cancel: function () {}
+                    cancel: function () { }
                 });
 
                 this.getView().addDependent(this._oProveedorDialog);
@@ -128,6 +139,21 @@ sap.ui.define([
             } else {
                 oWizard.invalidateStep(oStepInformacion);
             }
+        },
+
+        onAdjuntosValidacion: function () {
+            var oWizard = this.byId("wizSolicitud");
+            var oStepAdjuntos = this.byId("stpAdjuntos");
+
+            var aAdjuntos = this.getOwnerComponent().getModel("filesLocal").getProperty("/items") || [];
+            var sValid = aAdjuntos.length > 0;
+
+            if (sValid) {
+                oWizard.validateStep(oStepAdjuntos);
+            } else {
+                oWizard.invalidateStep(oStepAdjuntos);
+            }
+
         },
 
         onSiguientePaso2: function () {
@@ -282,6 +308,113 @@ sap.ui.define([
             if (oStepComentarios.getValidated()) {
                 oWizard.nextStep();
             }
+        },
+        onAfterItemAdded: function (oEvent) {
+            var oItem = oEvent.getParameter("item");
+            var oUploadSet = this.byId("us");
+
+            if (!oItem || !oUploadSet) {
+                return;
+            }
+
+            var aItems = oUploadSet.getItems() || [];
+            if (aItems.length > 5) {
+                MessageBox.error("Solo podés subir hasta 5 archivos.");
+                oUploadSet.removeItem(oItem);
+                return;
+            }
+
+            if (oUploadSet.getInstantUpload && oUploadSet.getInstantUpload()) {
+                oUploadSet.uploadItem(oItem);
+            } else {
+                this._addFileToLocalModel(oItem);
+            }
+        },
+
+        onBeforeUpload: function (oEvent) {
+            var oItem = oEvent.getParameter("item");
+            var oUploadSet = this.byId("us");
+
+            if (!oItem || !oUploadSet) {
+                return;
+            }
+
+            // Ejemplo: si después necesitás token o cabeceras
+            // var oCustomerHeaderToken = new UploadCollectionParameter({
+            //     name: "x-csrf-token",
+            //     value: "tu-token"
+            // });
+            // oEvent.getParameters().addHeaderParameter(oCustomerHeaderToken);
+
+            // Si tu backend necesita URL dinámica:
+            // oItem.setUploadUrl("/backend/adjuntos/upload");
+        },
+
+        onUploadCompleted: function (oEvent) {
+            var oItem = oEvent.getParameter("item");
+
+            if (oItem) {
+                this._addFileToLocalModel(oItem);
+            }
+
+            MessageToast.show("Archivo subido correctamente.");
+        },
+
+        onFileRemoved: function (oEvent) {
+            var oItem = oEvent.getParameter("item");
+            var oModel = this.getOwnerComponent().getModel("filesLocal");
+
+            if (!oItem || !oModel) {
+                return;
+            }
+
+            var aItems = oModel.getProperty("/items") || [];
+            var sFileName = oItem.getFileName();
+
+            aItems = aItems.filter(function (oFile) {
+                return oFile.fileName !== sFileName;
+            });
+
+            oModel.setProperty("/items", aItems);
+            MessageToast.show("Archivo eliminado.");
+        },
+
+        _addFileToLocalModel: function (oItem) {
+            var oModel = this.getOwnerComponent().getModel("filesLocal");
+
+            if (!oModel || !oItem) {
+                return;
+            }
+
+            var aItems = oModel.getProperty("/items") || [];
+            var sFileName = oItem.getFileName();
+            var bExists = aItems.some(function (oFile) {
+                return oFile.fileName === sFileName;
+            });
+
+            if (bExists) {
+                return;
+            }
+
+            var oFileObject = oItem.getFileObject ? oItem.getFileObject() : null;
+
+            aItems.push({
+                fileName: sFileName,
+                mime: oItem.getMediaType ? oItem.getMediaType() : (oFileObject ? oFileObject.type : ""),
+                url: "",
+                fileSize: oFileObject ? oFileObject.size : 0,
+                uploadedAt: new Date().toISOString()
+            });
+
+            oModel.setProperty("/items", aItems);
+        },
+
+        onUploadAllFiles: function () {
+            var oUploadSet = this.byId("us");
+            if (oUploadSet) {
+                oUploadSet.upload();
+            }
         }
+
     });
 });
