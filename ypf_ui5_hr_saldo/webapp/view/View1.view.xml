@@ -384,7 +384,7 @@
 
                 </WizardStep>
 
-                <WizardStep id="stpAdjuntos" title="Adjuntos" validated="false" activate=".onAdjuntosValidation">
+                <WizardStep id="stpAdjuntos" title="Adjuntos" validated="false" activate=".onAdjuntosValidacion">
                     <MessageStrip
                         id="msgAdjuntos"
                         class="sapUiSmallMarginBottom"
@@ -392,19 +392,46 @@
                         showIcon="true" />
 
                         <upload:UploadSet id="us"
-                                items="{filesLocal>/items}"
                                 maxFileSize="25"
                                 maxFileNameLength="120"
                                 instantUpload="false"
-                                beforeUploadStarts="onBeforeUpload"
-                                uploadCompleted="onUploadCompleted">
-
-                            <upload:UploadSetItem fileName="{filesLocal>fileName}"
-                            url="{filesLocal>url}"
-                            mediaType="{filesLocal>mime}"
-                            visibleEdit="false"
-                            visibleRemove="true"/>
+                                afterItemAdded=".onAfterItemAdded"
+                                beforeUploadStarts=".onBeforeUpload"
+                                uploadCompleted=".onUploadCompleted"
+                                afterItemRemoved=".onFileRemoved">
                         </upload:UploadSet>
+
+                        <List id="listAdjuntos" items="{filesLocal>/items}" headerText="Adjuntos cargados">
+
+    <StandardListItem id="listAdjuntos2"
+        title="{filesLocal>fileName}"
+        description="{filesLocal>mime}"
+        info="{filesLocal>size}"
+        icon="sap-icon://attachment" />
+
+</List>
+
+                           <HBox
+                        id="boxAccionesAdjuntos"
+                        justifyContent="Center"
+                        class="sapUiMediumMarginTop">
+
+                        <Button
+                            id="btnAnteriorAdjuntos"
+                            text="Paso anterior"
+                            tooltip="Permite regresar al paso anterior de la solicitud"
+                            press=".onPasoAnterior3"
+                            class="sapUiTinyMarginEnd" />
+
+                        <Button
+                            id="btnSiguienteAdjuntos"
+                            text="Siguiente paso"
+                            tooltip="Permite avanzar al siguiente paso de la solicitud"
+                            type="Emphasized"
+                            press=".onSiguientePaso4" />
+
+                    </HBox>
+
 
                 </WizardStep>
 

@@ -1,7 +1,8 @@
 sap.ui.define([
     "sap/ui/core/UIComponent",
+    "sap/ui/model/json/JSONModel",
     "ypf/ypfui5hrsaldo/model/models"
-], (UIComponent, models) => {
+], (UIComponent,JSONModel, models) => {
     "use strict";
 
     return UIComponent.extend("ypf.ypfui5hrsaldo.Component", {
@@ -18,6 +19,11 @@ sap.ui.define([
 
             // set the device model
             this.setModel(models.createDeviceModel(), "device");
+
+             // Modelo local para adjuntos
+            this.setModel(new JSONModel({
+                items: []
+            }), "filesLocal");
 
             // enable routing
             this.getRouter().initialize();

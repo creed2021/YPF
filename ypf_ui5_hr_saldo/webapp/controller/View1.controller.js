@@ -20,7 +20,11 @@ sap.ui.define([
 
             if (this._filesLocal) {
                 this._filesLocal.setProperty("/items", []);
+                this.getView().setModel(this._filesLocal, "filesLocal");
             }
+
+            console.log("filesLocal owner:", this.getOwnerComponent().getModel("filesLocal"));
+            console.log("filesLocal view:", this.getView().getModel("filesLocal"));
 
         },
 
@@ -144,16 +148,56 @@ sap.ui.define([
         onAdjuntosValidacion: function () {
             var oWizard = this.byId("wizSolicitud");
             var oStepAdjuntos = this.byId("stpAdjuntos");
+            var oUploadSet = this.byId("us");
 
-            var aAdjuntos = this.getOwnerComponent().getModel("filesLocal").getProperty("/items") || [];
-            var sValid = aAdjuntos.length > 0;
+            var aItems = oUploadSet ? oUploadSet.getItems() : [];
+            var aIncompleteItems = oUploadSet ? oUploadSet.getIncompleteItems() : [];
+            var bValid = (aItems.length + aIncompleteItems.length) > 0;
 
-            if (sValid) {
+            console.log("Items completos:", aItems);
+            console.log("Items pendientes:", aIncompleteItems);
+            console.log("Adjuntos válidos:", bValid);
+
+            if (bValid) {
                 oWizard.validateStep(oStepAdjuntos);
             } else {
                 oWizard.invalidateStep(oStepAdjuntos);
             }
 
+            return bValid;
+        },
+
+        onAfterItemAdded: function (oEvent) {
+            MessageToast.show("after");
+            var oItem = oEvent.getParameter("item");
+            var oUploadSet = this.byId("us");
+
+            if (!oItem || !oUploadSet) {
+                return;
+            }
+
+            var aItems = oUploadSet.getItems() || [];
+            var aIncompleteItems = oUploadSet.getIncompleteItems() || [];
+            var iTotal = aItems.length + aIncompleteItems.length;
+
+            if (iTotal > 5) {
+                MessageBox.error("Solo podés subir hasta 5 archivos.");
+                oUploadSet.removeItem(oItem);
+                return;
+            }
+            console.log("_addFileToLocalModel");
+            this._addFileToLocalModel(oItem);
+        },
+
+        onSiguientePaso4: function () {
+            var oWizard = this.byId("wizSolicitud");
+            var bValid = this.onAdjuntosValidacion();
+
+            if (bValid) {
+                oWizard.nextStep();
+            } else {
+                sap.m.MessageToast.show("Debe adjuntar al menos un archivo.");
+            }
         },
 
         onSiguientePaso2: function () {
@@ -294,7 +338,7 @@ sap.ui.define([
             }
         },
 
-        onPasoAnterior2: function () {
+        onPasoAnterior3: function () {
             var oWizard = this.byId("wizSolicitud");
             oWizard.previousStep();
         },
@@ -307,27 +351,6 @@ sap.ui.define([
 
             if (oStepComentarios.getValidated()) {
                 oWizard.nextStep();
-            }
-        },
-        onAfterItemAdded: function (oEvent) {
-            var oItem = oEvent.getParameter("item");
-            var oUploadSet = this.byId("us");
-
-            if (!oItem || !oUploadSet) {
-                return;
-            }
-
-            var aItems = oUploadSet.getItems() || [];
-            if (aItems.length > 5) {
-                MessageBox.error("Solo podés subir hasta 5 archivos.");
-                oUploadSet.removeItem(oItem);
-                return;
-            }
-
-            if (oUploadSet.getInstantUpload && oUploadSet.getInstantUpload()) {
-                oUploadSet.uploadItem(oItem);
-            } else {
-                this._addFileToLocalModel(oItem);
             }
         },
 
@@ -380,9 +403,13 @@ sap.ui.define([
         },
 
         _addFileToLocalModel: function (oItem) {
-            var oModel = this.getOwnerComponent().getModel("filesLocal");
+            var oModel = this._filesLocal;
+
+            console.log("MODEL:", oModel);
+            console.log("ITEM:", oItem);
 
             if (!oModel || !oItem) {
+                console.log("No hay modelo o item");
                 return;
             }
 
@@ -402,11 +429,14 @@ sap.ui.define([
                 fileName: sFileName,
                 mime: oItem.getMediaType ? oItem.getMediaType() : (oFileObject ? oFileObject.type : ""),
                 url: "",
-                fileSize: oFileObject ? oFileObject.size : 0,
-                uploadedAt: new Date().toISOString()
+                size: oFileObject ? (oFileObject.size / 1024).toFixed(2) + " KB" : "",
+                status: "Pendiente"
             });
 
             oModel.setProperty("/items", aItems);
+            oModel.refresh(true);
+
+            console.log("filesLocal actualizado:", oModel.getProperty("/items"));
         },
 
         onUploadAllFiles: function () {
