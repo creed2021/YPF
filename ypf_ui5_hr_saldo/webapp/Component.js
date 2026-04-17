@@ -20,6 +20,14 @@ sap.ui.define([
             // set the device model
             this.setModel(models.createDeviceModel(), "device");
 
+             // Modelo para el tipo de Solicitud
+            this.setModel(new JSONModel({
+                tipoSolicitud: "",
+                showMulta: true,
+                showReintegro: false,
+                showFondoReparo: false
+            }), "ui");
+
              // Modelo local para adjuntos
             this.setModel(new JSONModel({
                 items: []

@@ -47,7 +47,7 @@
                         <Label id="lblTipoSolicitud" text="Tipo de Solicitud" required="true" />
                         <ComboBox
                             id="cmbTipoSolicitud"
-                            selectionChange=".onCabeceraValidacion">
+                            selectionChange=".onTipoSolicitudChange">
                             <items>
                                 <core:Item id="itemTipoSolicitudDefault" key="" text="Seleccione..." />
                                 <core:Item id="itemTipoSolicitudMulta" key="1" text="Multa" />
@@ -102,7 +102,7 @@
         text="Ingresar los datos de Informacion"
         showIcon="true" />
 
-    <VBox id="boxInformacion" class="sapUiSmallMargin">
+    <VBox id="boxInformacion" class="sapUiSmallMargin" visible="{ui>/showMulta}">
 
         <Panel
             id="pnlDatosCabecera"
@@ -334,6 +334,357 @@
         </HBox>
 
     </VBox>
+
+    <VBox id="boxInformacionReintegro" visible="{ui>/showReintegro}" class="sapUiSmallMargin">
+
+    <Panel
+        id="pnlDatosCabeceraReintegro"
+        headerText="Datos de cabecera"
+        expandable="true"
+        expanded="true"
+        class="sapUiResponsiveMargin">
+
+        <VBox id="boxDatosCabeceraReintegro" class="sapUiSmallMargin">
+
+            <Button
+                id="btnSolicitudReintegro"
+                text="Solicitud de Reintegro"
+                type="Transparent"
+                icon="sap-icon://add"
+                class="sapUiTinyMarginBottom" />
+
+            <layout:Grid
+                id="grdStep2Reintegro"
+                width="100%"
+                hSpacing="2"
+                vSpacing="1"
+                defaultSpan="XL12 L12 M12 S12">
+
+                <HBox
+                    id="hbFiltrosReintegro"
+                    wrap="Wrap"
+                    class="sapUiSmallMarginBottom"
+                    width="100%"
+                    justifyContent="Start"
+                    alignItems="End">
+
+                    <VBox id="vbTipoSolicitudReintegro" class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <Label
+                            id="lblTipoSolicitudReintegro"
+                            text="Tipo de Solicitud:"
+                            required="true" />
+                        <ComboBox
+                            id="cmbTipoSolicitudReintegro"
+                            width="12rem"
+                            selectionChange=".onInformacionValidacion">
+                            <items>
+                                <core:Item id="itemTipoSolReintegroDefault" key="" text="Seleccione..." />
+                                <core:Item id="itemTipoSolReintegroMulta" key="1" text="Multa" />
+                                <core:Item id="itemTipoSolReintegroReintegro" key="2" text="Reintegro" />
+                                <core:Item id="itemTipoSolReintegroFondo" key="3" text="Fondo de Reparo" />
+                            </items>
+                        </ComboBox>
+                    </VBox>
+
+                    <VBox id="vbNroPedidoReintegro" class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <Label
+                            id="lblNroPedidoReintegro"
+                            text="Nro. Pedido:" />
+                        <Input
+                            id="inpNroPedidoReintegro"
+                            width="12rem"
+                            placeholder="Ingrese Nro. Pedido"
+                            showValueHelp="true"
+                            change=".onInformacionValidacion" />
+                    </VBox>
+
+                    <VBox id="vbHojaEntradaServReintegro" class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <Label
+                            id="lblHojaEntradaServReintegro"
+                            text="Hoja de ent/serv.:" />
+                        <Input
+                            id="inpHojaEntradaServReintegro"
+                            width="12rem"
+                            placeholder="Seleccione Hoja de ent/serv."
+                            change=".onInformacionValidacion" />
+                    </VBox>
+
+                    <VBox id="vbBuscarReintegro" class="sapUiSmallMarginBottom">
+                        <Button
+                            id="btnBuscarReintegro"
+                            text="Buscar"
+                            type="Emphasized"
+                            press=".onBuscarReintegro" />
+                    </VBox>
+
+                </HBox>
+
+                <VBox id="vbTablaSolicitudesReintegro" width="100%">
+                    <Title
+                        id="ttlSolicitudesReintegro"
+                        text="Solicitudes (0)"
+                        level="H5"
+                        class="sapUiTinyMarginBottom" />
+
+                    <Table
+                        id="tblSolicitudesReintegro"
+                        width="100%"
+                        inset="false"
+                        noDataText="Sin datos">
+
+                        <columns>
+                            <Column id="colSolicitudReintegro" width="8rem">
+                                <Text id="txtColSolicitudReintegro" text="Solicitud" />
+                            </Column>
+                            <Column id="colDocCreadoReintegro" width="8rem">
+                                <Text id="txtColDocCreadoReintegro" text="Doc. Creado" />
+                            </Column>
+                            <Column id="colEjercicioReintegro" width="7rem">
+                                <Text id="txtColEjercicioReintegro" text="Ejercicio" />
+                            </Column>
+                            <Column id="colSectorReintegro" width="7rem">
+                                <Text id="txtColSectorReintegro" text="Sector" />
+                            </Column>
+                            <Column id="colSucursalReintegro" width="7rem">
+                                <Text id="txtColSucursalReintegro" text="Sucursal" />
+                            </Column>
+                            <Column id="colUbicacionReintegro" width="8rem">
+                                <Text id="txtColUbicacionReintegro" text="Ubicación" />
+                            </Column>
+                            <Column id="colImporteReintegro" width="7rem" hAlign="End">
+                                <Text id="txtColImporteReintegro" text="Importe" />
+                            </Column>
+                            <Column id="colMonedaReintegro" width="6rem">
+                                <Text id="txtColMonedaReintegro" text="Moneda" />
+                            </Column>
+                            <Column id="colCebeReintegro" width="6rem">
+                                <Text id="txtColCebeReintegro" text="CEBE" />
+                            </Column>
+                        </columns>
+
+                        <items>
+                            <ColumnListItem id="cliSolicitudesReintegro">
+                                <cells>
+                                    <Text id="txtSolicitudReintegro" text="" />
+                                    <Text id="txtDocCreadoReintegro" text="" />
+                                    <Text id="txtEjercicioReintegro" text="" />
+                                    <Text id="txtSectorReintegro" text="" />
+                                    <Text id="txtSucursalReintegro" text="" />
+                                    <Text id="txtUbicacionReintegro" text="" />
+                                    <Text id="txtImporteReintegro" text="" />
+                                    <Text id="txtMonedaReintegro" text="" />
+                                    <Text id="txtCebeReintegro" text="" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </VBox>
+
+            </layout:Grid>
+
+        </VBox>
+    </Panel>
+
+    <HBox
+        id="boxAccionesInformacionReintegro"
+        justifyContent="Center"
+        class="sapUiMediumMarginTop">
+
+        <Button
+            id="btnAnteriorInformacionReintegro"
+            text="Paso anterior"
+            press=".onPasoAnterior1"
+            class="sapUiTinyMarginEnd" />
+
+        <Button
+            id="btnSiguienteInformacionReintegro"
+            text="Siguiente paso"
+            type="Emphasized"
+            press=".onSiguientePaso2" />
+    </HBox>
+
+</VBox>
+
+<VBox id="vbfr" visible="{ui>/showFondoReparo}" class="sapUiSmallMargin">
+
+    <Panel id="pfr1"
+        headerText="Datos de cabecera"
+        expandable="true"
+        expanded="true"
+        class="sapUiResponsiveMargin">
+
+        <VBox id="vb1" class="sapUiSmallMargin">
+
+            <Button id="bfr"
+                text="Fondo de Reparo"
+                type="Transparent"
+                icon="sap-icon://add"
+                class="sapUiTinyMarginBottom" />
+
+            <HBox justifyContent="Center" width="100%">
+                <layout:Grid id="gfr1"
+                    width="72rem"
+                    hSpacing="1"
+                    vSpacing="0.5">
+
+                    <!-- IZQUIERDA -->
+                    <VBox id="vbfri1" width="100%">
+                        <layoutData>
+                            <layout:GridData span="XL6 L6 M12 S12" />
+                        </layoutData>
+
+                        <HBox
+                            id="hbSucursalReparo"
+                            alignItems="Center"
+                            class="sapUiTinyMarginBottom"
+                            width="100%">
+                            <Label
+                                id="lblsucursal"
+                                text="Sucursal:"
+                                required="true"
+                                width="120px" />
+                            <Input
+                                id="inpSucursalReparo"
+                                value="1101"
+                                enabled="false"
+                                width="14rem" />
+                        </HBox>
+
+                        <HBox
+                            id="hbPedidoReparo"
+                            alignItems="Center"
+                            class="sapUiTinyMarginBottom"
+                            width="100%">
+                            <Label
+                                id="lblpedidoreparo"
+                                text="Pedido:"
+                                required="true"
+                                width="120px" />
+                            <Input
+                                id="inpPedidoReparo"
+                                change=".onInformacionValidacion"
+                                width="14rem" />
+                        </HBox>
+
+                        <HBox
+                            id="hbHojaReparo"
+                            alignItems="Center"
+                            class="sapUiTinyMarginBottom"
+                            width="100%">
+                            <Label
+                                id="lblhsfr"
+                                text="Hoja de ent/serv.:"
+                                required="true"
+                                width="120px" />
+                            <Input
+                                id="inpHojaReparo"
+                                change=".onInformacionValidacion"
+                                width="14rem" />
+                        </HBox>
+
+                        <HBox
+                            id="hbEjercicioReparo"
+                            alignItems="Center"
+                            class="sapUiTinyMarginBottom"
+                            width="100%">
+                            <Label
+                                id="lbler1"
+                                text="Ejercicio:"
+                                required="true"
+                                width="120px" />
+                            <Input
+                                id="inpEjercicioReparo"
+                                change=".onInformacionValidacion"
+                                width="14rem" />
+                        </HBox>
+                    </VBox>
+
+                    <!-- DERECHA -->
+                    <VBox id="vbfr2" width="100%">
+                        <layoutData>
+                            <layout:GridData span="XL6 L6 M12 S12" />
+                        </layoutData>
+
+                        <HBox
+                            id="hbMonedaReparo"
+                            alignItems="Center"
+                            class="sapUiTinyMarginBottom"
+                            width="100%">
+                            <Label
+                                id="lblmr1"
+                                text="Moneda:"
+                                required="true"
+                                width="120px" />
+                            <ComboBox
+                                id="cmbMonedaReparo"
+                                selectionChange=".onInformacionValidacion"
+                                width="14rem">
+                                <items>
+                                    <core:Item id="itemMonedaReparoDefault" key="" text="Seleccione..." />
+                                    <core:Item id="itemMonedaReparoArs" key="ARS" text="ARS" />
+                                    <core:Item id="itemMonedaReparoUsd" key="USD" text="USD" />
+                                    <core:Item id="itemMonedaReparoEur" key="EUR" text="EUR" />
+                                </items>
+                            </ComboBox>
+                        </HBox>
+
+                        <HBox
+                            id="hbImporteReparo"
+                            alignItems="Center"
+                            class="sapUiTinyMarginBottom"
+                            width="100%">
+                            <Label
+                                id="ir1"
+                                text="Importe:"
+                                required="true"
+                                width="120px" />
+                            <Input
+                                id="inpImporteReparo"
+                                change=".onInformacionValidacion"
+                                width="14rem" />
+                        </HBox>
+
+                        <HBox
+                            id="hbReferenciaReparo"
+                            alignItems="Center"
+                            class="sapUiTinyMarginBottom"
+                            width="100%">
+                            <Label
+                                id="lblrfr1"
+                                text="Referencia:"
+                                width="120px" />
+                            <Input
+                                id="inpReferenciaReparo"
+                                width="14rem" />
+                        </HBox>
+                    </VBox>
+
+                </layout:Grid>
+            </HBox>
+
+        </VBox>
+    </Panel>
+
+    <HBox
+        id="boxAccionesInformacionFondoReparo"
+        justifyContent="Center"
+        class="sapUiMediumMarginTop">
+
+        <Button
+            id="btnAnteriorFondoReparo"
+            text="Paso anterior"
+            press=".onPasoAnterior1"
+            class="sapUiTinyMarginEnd" />
+
+        <Button
+            id="btnSiguienteFondoReparo"
+            text="Siguiente paso"
+            type="Emphasized"
+            press=".onSiguientePaso2" />
+    </HBox>
+
+</VBox>
+
 
 </WizardStep>
 

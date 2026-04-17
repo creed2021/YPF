@@ -45,6 +45,22 @@ sap.ui.define([
             }
         },
 
+        onTipoSolicitudChange: function (oEvent) {
+            var sKey = oEvent.getSource().getSelectedKey();
+            var oUIModel = this.getView().getModel("ui");
+
+            oUIModel.setProperty("/tipoSolicitud", sKey);
+            oUIModel.setProperty("/showMulta", sKey === "1");
+            oUIModel.setProperty("/showReintegro", sKey === "2");
+            oUIModel.setProperty("/showFondoReparo", sKey === "3");
+
+            // opcional: limpiar campos del paso 2
+            this._limpiarPaso2();
+
+            // opcional: revalidar
+            this.onInformacionValidacion();
+        },
+
         onValueHelpSociedad: function () {
             var aSociedades = [
                 { key: "0620", text: "0620" },
@@ -128,20 +144,52 @@ sap.ui.define([
         onInformacionValidacion: function () {
             var oWizard = this.byId("wizSolicitud");
             var oStepInformacion = this.byId("stpInformacion");
+            var sTipo = this.getView().getModel("ui").getProperty("/tipoSolicitud");
+            var bCompleto = false;
 
-            var bCompleto =
-                !!this.byId("inpSucursal").getValue().trim() &&
-                !!this.byId("inpPedido").getValue().trim() &&
-                !!this.byId("inpHojaEntrada").getValue().trim() &&
-                !!this.byId("inpCentroCosto").getValue().trim() &&
-                !!this.byId("inpEjercicio").getValue().trim() &&
-                !!this.byId("cmbMoneda").getSelectedKey() &&
-                !!this.byId("inpImporte").getValue().trim();
+            if (sTipo === "1") {
 
-            if (bCompleto) {
-                oWizard.validateStep(oStepInformacion);
-            } else {
-                oWizard.invalidateStep(oStepInformacion);
+                bCompleto =
+                    !!this.byId("inpSucursal").getValue().trim() &&
+                    !!this.byId("inpPedido").getValue().trim() &&
+                    !!this.byId("inpHojaEntrada").getValue().trim() &&
+                    !!this.byId("inpCentroCosto").getValue().trim() &&
+                    !!this.byId("inpEjercicio").getValue().trim() &&
+                    !!this.byId("cmbMoneda").getSelectedKey() &&
+                    !!this.byId("inpImporte").getValue().trim();
+
+                if (bCompleto) {
+                    oWizard.validateStep(oStepInformacion);
+                } else {
+                    oWizard.invalidateStep(oStepInformacion);
+                }
+            }
+            else if (sTipo === "2") {
+
+                // Reintegro
+                bCompleto =
+                    !!this.byId("cmbTipoSolicitudReintegro").getSelectedKey() &&
+                    !!this.byId("inpNroPedidoReintegro").getValue().trim() &&
+                    !!this.byId("inpHojaEntradaServReintegro").getValue().trim();
+
+                if (bCompleto) {
+                    oWizard.validateStep(oStepInformacion);
+                } else {
+                    oWizard.invalidateStep(oStepInformacion);
+                }
+            } else if (sTipo === "3") {
+                bCompleto =
+                    !!this.byId("inpPedidoReparo").getValue().trim() &&
+                    !!this.byId("inpHojaReparo").getValue().trim() &&
+                    !!this.byId("inpEjercicioReparo").getValue().trim() &&
+                    !!this.byId("cmbMonedaReparo").getSelectedKey() &&
+                    !!this.byId("inpImporteReparo").getValue().trim();
+
+                if (bCompleto) {
+                    oWizard.validateStep(oStepInformacion);
+                } else {
+                    oWizard.invalidateStep(oStepInformacion);
+                }
             }
         },
 
