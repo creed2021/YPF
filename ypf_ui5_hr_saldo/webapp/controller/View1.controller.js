@@ -45,7 +45,64 @@ sap.ui.define([
             }
         },
 
+        _limpiarPaso2: function () {
+
+            var aControles = [
+                // Multa
+                "inpSucursal",
+                "inpPedido",
+                "inpHojaEntrada",
+                "inpCentroCosto",
+                "inpEjercicio",
+                "cmbMoneda",
+                "inpImporte",
+                "inpReferencia",
+                "inpCentroBeneficio",
+
+                // Reintegro
+                "inpNroPedidoReintegro",
+                "inpHojaEntradaServReintegro",
+
+                // Fondo Reparo
+                "inpPedidoReparo",
+                "inpHojaReparo",
+                "inpEjercicioReparo",
+                "cmbMonedaReparo",
+                "inpImporteReparo",
+                "inpReferenciaReparo"
+            ];
+
+            aControles.forEach(function (sId) {
+                var oControl = this.byId(sId);
+
+                if (!oControl) {
+                    return;
+                }
+
+                // Inputs
+                if (oControl.setValue) {
+                    oControl.setValue("");
+                }
+
+                // ComboBox
+                if (oControl.setSelectedKey) {
+                    oControl.setSelectedKey("");
+                }
+
+            }.bind(this));
+
+            // 👉 Opcional: valores fijos que querés mantener
+            if (this.byId("inpSucursal")) {
+                this.byId("inpSucursal").setValue("1101");
+            }
+
+            if (this.byId("inpSucursalReparo")) {
+                this.byId("inpSucursalReparo").setValue("1101");
+            }
+        },
+
         onTipoSolicitudChange: function (oEvent) {
+            var oWizard = this.getView().byId("wizSolicitud");
             var sKey = oEvent.getSource().getSelectedKey();
             var oUIModel = this.getView().getModel("ui");
 
@@ -57,8 +114,22 @@ sap.ui.define([
             // opcional: limpiar campos del paso 2
             this._limpiarPaso2();
 
-            // opcional: revalidar
-            this.onInformacionValidacion();
+            // Invalidar pasos siguientes
+            oWizard.invalidateStep(this.byId("stpInformacion"));
+            oWizard.invalidateStep(this.byId("stpComentarios"));
+            oWizard.invalidateStep(this.byId("stpAdjuntos"));
+
+            // Descartar progreso desde step 2
+            oWizard.discardProgress(this.byId("stpInformacion"));
+
+            // clave: resetear desde cabecera, no desde informacion
+            oWizard.discardProgress(this.byId("stpCabecera"));
+
+            // y reposicionarte en el step 1
+            oWizard.goToStep(this.byId("stpCabecera"), true);
+
+            this.onCabeceraValidacion();
+
         },
 
         onValueHelpSociedad: function () {
